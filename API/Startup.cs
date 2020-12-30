@@ -36,6 +36,7 @@ namespace API
                 ("DefaultConnection"));
             });
             services.AddSwaggerGen();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +57,10 @@ namespace API
 
             app.UseHttpsRedirection();
 
+            app.UseCors(x => x.AllowAnyHeader()
+            .SetIsOriginAllowed(origin => true)
+            .AllowAnyMethod().
+            WithOrigins("https://localhost:44324"));
             app.UseRouting();
 
             app.UseAuthorization();
